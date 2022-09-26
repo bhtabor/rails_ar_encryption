@@ -1,1 +1,1 @@
-from .base import derive_key, decrypt
+from .base import encrypt, decrypt, derive_key

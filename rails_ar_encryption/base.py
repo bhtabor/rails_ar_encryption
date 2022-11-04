@@ -49,10 +49,14 @@ def derive_key(password, salt, deterministic=False):
     Derive the key just like it's done on Rails side, see:
     https://github.com/rails/rails/blob/main/activesupport/lib/active_support/key_generator.rb#L39
     """
-    if deterministic:
-        return PBKDF2(password, salt, 32, count=2**16, hmac_hash_module=SHA256)
-    else:
-        return PBKDF2(password, salt, 32, count=2**16, hmac_hash_module=SHA1)
+    # if deterministic:
+    #     return PBKDF2(password, salt, 32, count=2**16, hmac_hash_module=SHA256)
+    # else:
+    #     return PBKDF2(password, salt, 32, count=2**16, hmac_hash_module=SHA1)
+
+    # Use rails default key generator hash digest class SHA1
+    # https://github.com/rails/rails/blob/main/activesupport/lib/active_support/key_generator.rb#L22
+    return PBKDF2(password, salt, 32, count=2**16, hmac_hash_module=SHA1)
 
 
 def _generate_iv(deterministic, key, clear_text):
